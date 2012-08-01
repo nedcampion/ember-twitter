@@ -2,7 +2,7 @@
 
 Provides simple automation using the Twitter @anywhere API using Mixins.
 
-Insipred by https://raw.github.com/luan/ember-facebook
+Insipred by https://github.com/luan/ember-facebook
 
 # Usage
 

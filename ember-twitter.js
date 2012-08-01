@@ -17,8 +17,12 @@ Ember.Twitter = Ember.Mixin.create({
     });
   }.observes('twAppId'),
 
-  updateTWUser: function(){
+  updateTWUser: function(user){
     var self = this;
+    if(user){
+      this.set('TWUser', user);
+      return;
+    }
     twttr.anywhere(function (T) {
       if(T.isConnected()){
         self.set('TWUser', T.currentUser);
@@ -29,9 +33,18 @@ Ember.Twitter = Ember.Mixin.create({
   },
 
   initComplete: function(){
-    console.log('initComplete', window.twttr);
+    var self = this;
     this.set('TWLoading', false);
     this.updateTWUser();
+    twttr.anywhere(function (T) {
+      T.bind("authComplete", function (e, user) {
+        self.updateTWUser(user);
+      });
+      
+      T.bind("signOut", function (e) {
+        self.updateTWUser();
+      });
+    });
   },
 
   initFailed: function(){
