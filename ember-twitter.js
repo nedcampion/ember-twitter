@@ -20,12 +20,12 @@ Ember.Twitter = Ember.Mixin.create({
   updateTWUser: function(user){
     var self = this;
     if(user){
-      this.set('TWUser', user);
+      this.set('TWUser', Ember.Object.create(user));
       return;
     }
     twttr.anywhere(function (T) {
       if(T.isConnected()){
-        self.set('TWUser', T.currentUser);
+        self.set('TWUser', Ember.Object.create(T.currentUser));
       }else{
         self.set('TWUser', null);
       }
